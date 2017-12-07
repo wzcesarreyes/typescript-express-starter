@@ -1,6 +1,6 @@
-# TypeScript 2 + Express + Node.js
+# TypeScript 2 + Express + Node.js + JSON Web Token (JWT)
 
-This is a repository to go with my article on creating an Express web application using TypeScript 2.
+This is a boilerplate to start creating backend APIs
 
 ## Install
 
@@ -17,3 +17,13 @@ And then run the grunt task to compile the TypeScript:
 To start the server run:
 
 `$ npm start`
+
+## Optionally we can use nodemon
+
+Install nodemon
+
+`$ npm install nodemon --save-dev`
+
+To start the server run:
+
+`$ npm start dev`
