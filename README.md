@@ -26,4 +26,4 @@ Install nodemon
 
 To start the server run:
 
-`$ npm start dev`
+`$ npm run dev`
