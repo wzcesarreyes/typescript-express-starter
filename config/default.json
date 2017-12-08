@@ -1,0 +1,14 @@
+{
+  "auth0": {
+    "secret": {
+      "cache": true,
+      "rateLimit": true,
+      "jwksRequestsPerMinute": 5,
+      "jwksUri": "https://cesar-reyes.auth0.com/.well-known/jwks.json"
+    },
+    "audience": "http://localhost:8080",
+    "issuer": "https://cesar-reyes.auth0.com/",
+    "algorithms": ["RS256"]
+  }
+  
+}
