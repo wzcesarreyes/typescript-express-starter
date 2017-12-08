@@ -103,7 +103,7 @@ export class Server {
     //error handling
     this.app.use(errorHandler());
 
-    let jwtCheck = Auth0.jwtCheck();
+    let jwtCheck = Jwt.jwtCheck();
 
     this.app.use(jwtCheck);
 
