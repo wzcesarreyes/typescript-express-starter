@@ -10,6 +10,6 @@ export class Jwt {
         audience: auth0Config.audience,
         issuer: auth0Config.issuer,
         algorithms: auth0Config.algorithms
-      });;
+      });
   }
 }

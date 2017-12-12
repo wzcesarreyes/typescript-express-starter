@@ -6,7 +6,10 @@ import * as path from "path";
 import * as errorHandler from "errorhandler";
 import * as config from "config";
 import { ApiRoute } from "./routes/api";
+import { LoginRoute } from "./routes/login";
 import { Jwt } from './utils/jwt';
+import { Auth } from "./utils/auth";
+
 /**
  * The server.
  *
@@ -44,25 +47,66 @@ export class Server {
     //add routes
     this.routes();
 
-    //add api
-    this.api();
+    //add public api
+    this.Api();
+
   }
 
   /**
-   * Create REST API routes
+   * Create authenticated REST API routes
    *
    * @class Server
    * @method api
    */
-  public api() {
+  public authenticatedApi() {
+
+    let jwtCheck = Jwt.jwtCheck();
+
+    // this.app.use(jwtCheck);
+
+    // // If we do not get the correct credentials, we’ll return an appropriate message
+    // this.app.use(function (err, req, res, next) {
+    //   if (err.name === 'UnauthorizedError') {
+    //     res.status(401).json({ message: 'Missing or invalid token' });
+    //   }
+    // });
+
     let router: express.Router;
     router = express.Router();
+
+
+
+    //use router middleware
+    this.app.use(router);
+  }
+
+  /**
+   * Create a non authenticated REST API routes
+   *
+   * @class Server
+   * @method api
+   */
+  public Api() {
+    let router: express.Router;
+    router = express.Router();
+
+    //LoginRoute
+    LoginRoute.create(router);
 
     //IndexRoute
     ApiRoute.create(router);
 
+    this.app.use(Auth.check);
+    // If we do not get the correct credentials, we’ll return an appropriate message
+    this.app.use(function (err, req, res, next) {
+      if (err.name === 'JsonWebTokenError') {
+        res.status(500).json({ auth: false, message: err.message });
+      }
+    });
+
     //use router middleware
     this.app.use(router);
+
   }
 
   /**
@@ -92,7 +136,8 @@ export class Server {
     }));
 
     //mount cookie parser middleware
-    this.app.use(cookieParser("SECRET_GOES_HERE"));
+    const cookieKey = config.get('cookieSecret');
+    this.app.use(cookieParser(cookieKey));
 
     // catch 404 and forward to error handler
     this.app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -102,17 +147,6 @@ export class Server {
 
     //error handling
     this.app.use(errorHandler());
-
-    let jwtCheck = Jwt.jwtCheck();
-
-    this.app.use(jwtCheck);
-
-    // If we do not get the correct credentials, we’ll return an appropriate message
-    this.app.use(function (err, req, res, next) {
-      if (err.name === 'UnauthorizedError') {
-        res.status(401).json({ message: 'Missing or invalid token' });
-      }
-    });
 
   }
 

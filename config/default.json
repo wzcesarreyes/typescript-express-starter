@@ -1,4 +1,8 @@
 {
+  "cookieSecret": "SECRET_GOES_HERE",
+  "authSecret": "SECRET_GOES_HERE",
+  "tokenExpire": 86400, // expires in 24 hours,
+  "headerTokenName": "authorization",
   "auth0": {
     "secret": {
       "cache": true,
@@ -9,6 +13,16 @@
     "audience": "http://localhost:8080",
     "issuer": "https://cesar-reyes.auth0.com/",
     "algorithms": ["RS256"]
-  }
-  
+  },
+  "clients": [
+    {
+      "name": "Front-end",
+      "id": "dfhsNiuLCHqPBLM54VMn7krHrqqj7kFR",
+      "secret": "tYI3SytAY9qlq9x_ocdcQ3B4z2VIHf6OpgBYBIJFnIlg1WlN0w5qj15fG3w7ulno",
+      "audience": "http://localhost:8080"
+    }
+  ],
+  "openEndpoints": [
+    "/auth/login"
+  ]
 }

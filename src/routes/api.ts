@@ -50,6 +50,6 @@ export class ApiRoute extends BaseRoute {
    * @next {NextFunction} Execute the next method.
    */
   public index(req: Request, res: Response, next: NextFunction) {
-    res.send('Root');
+    res.send('Done!!!');
   }
 }
